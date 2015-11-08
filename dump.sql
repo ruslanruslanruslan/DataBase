@@ -111,7 +111,7 @@ CREATE TABLE `fct_filter` (
   `description_filter` varchar(255) DEFAULT NULL,
   `min_price` int(11) DEFAULT NULL,
   PRIMARY KEY (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `fct_smsspamer` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `sent_date` datetime DEFAULT NULL,
   PRIMARY KEY (`pk_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=576 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=706 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -549,7 +549,7 @@ CREATE TABLE `oc_t_item` (
   CONSTRAINT `oc_t_item_ibfk_1` FOREIGN KEY (`fk_i_user_id`) REFERENCES `oc_t_user` (`pk_i_id`),
   CONSTRAINT `oc_t_item_ibfk_2` FOREIGN KEY (`fk_i_category_id`) REFERENCES `oc_t_category` (`pk_i_id`),
   CONSTRAINT `oc_t_item_ibfk_3` FOREIGN KEY (`fk_c_currency_code`) REFERENCES `oc_t_currency` (`pk_c_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=83614 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=84229 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -672,7 +672,7 @@ CREATE TABLE `oc_t_item_resource` (
   KEY `fk_i_item_id_2` (`fk_i_item_id`),
   KEY `fk_i_item_id_3` (`fk_i_item_id`),
   CONSTRAINT `oc_t_item_resource_ibfk_1` FOREIGN KEY (`fk_i_item_id`) REFERENCES `oc_t_item` (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=264582 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=271984 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1089,7 +1089,7 @@ CREATE TABLE `oc_t_pm_settings` (
   `flash_alert` enum('1','0') DEFAULT NULL,
   `save_sent` enum('1','0') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2616 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2640 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1200,7 +1200,7 @@ CREATE TABLE `oc_t_user` (
   CONSTRAINT `oc_t_user_ibfk_2` FOREIGN KEY (`fk_i_region_id`) REFERENCES `oc_t_region` (`pk_i_id`),
   CONSTRAINT `oc_t_user_ibfk_3` FOREIGN KEY (`fk_i_city_id`) REFERENCES `oc_t_city` (`pk_i_id`),
   CONSTRAINT `oc_t_user_ibfk_4` FOREIGN KEY (`fk_i_city_area_id`) REFERENCES `oc_t_city_area` (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2458 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2482 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1375,9 +1375,9 @@ begin
 			)
 		)
 	then 
-		return 1;
+		return false;
 	else 
-		return 0;
+		return true;
 	end if;
 end ;;
 DELIMITER ;
@@ -1418,7 +1418,7 @@ begin
 					ff.fk_i_category_id = t.pk_i_id 
 					and fga.user_section = t.s_name
 					and (
-						(cast(greatest(fga.price, bid) as UNSIGNED) < ff.min_price or ff.min_price is null)
+						(cast(fga.price as UNSIGNED) < ff.min_price or ff.min_price is null)
 						and (upper(fga.title) regexp ff.title_filter or ff.title_filter is null)
 						and (upper(fga.description) regexp ff.description_filter or ff.description_filter is null)
 						)
@@ -1427,9 +1427,9 @@ begin
 			)
 		)
 	then 
-		return 1;
+		return true;
 	else 
-		return 0;
+		return false;
 	end if;
 
 end ;;
@@ -1464,9 +1464,9 @@ begin
 			)
 		)
 	then 
-		return 1;
+		return true;
 	else 
-		return 0;
+		return false;
 	end if;
 
 end ;;
@@ -1547,9 +1547,9 @@ begin
 			)
 		)
 	then 
-		return 1;
+		return true;
 	else 
-		return 0;
+		return false;
 	end if;
 end ;;
 DELIMITER ;
@@ -1594,9 +1594,9 @@ begin
 			)
 		)
 	then 
-		return 1;
+		return false;
 	else 
-		return 0;
+		return true;
 	end if;
 end ;;
 DELIMITER ;
@@ -1680,10 +1680,42 @@ begin
 			)
 		)
 	then 
-		return 1;
+		return true;
 	else 
-		return 0;
+		return false;
 	end if;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_check_sms_IsAllowedForSending` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_check_sms_IsAllowedForSending`(pk_id INT) RETURNS varchar(255) CHARSET utf8
+begin
+
+	SET @last_day_cnt = 
+		(
+			SELECT 
+				COUNT(*) 
+			FROM 
+				fct_smsspamer
+			WHERE sent_date > DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -1 DAY)
+		);
+
+	SET @sms_left = 100 - @last_day_cnt;
+
+	RETURN @sms_left;
 
 end ;;
 DELIMITER ;
@@ -2220,7 +2252,7 @@ start transaction;
 			id_resource_list = id_rl
 			and 
 				(
-				length(description) < 255
+				length(description) < 25
 				or city is null
 				or photo_cnt = 0
 				or photo_cnt is null
@@ -2383,192 +2415,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_map_grabber_ebay_old` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_map_grabber_ebay_old`(id_rl int#, out p int
-)
-t_root:begin
-
-#SET SQL_SAFE_UPDATES=0;
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
-BEGIN
-SELECT "SQLEXCEPTION";
-    ROLLBACK;
-END;
-
-start transaction;
-
-#while (select min(transformated) from playandbay.fct_grabber_ebay)<>1
-#do
-
-if id_rl = -11 then
-set id_rl=(select max(id_resource_list) 
-                       from playandbay.fct_grabber_ebay 
-                       where price is not null and transformated in (0, 4));
-end if;
-
-if exists 
-(select 1 from playandbay.fct_grabber_ebay where (transformated = 1 or price is null) and id_resource_list=id_rl) 
-then
-	leave t_root;
-end if;
-
-set @id_i=(select max(pk_i_id)+1 from playandbay.oc_t_item);
-
-#select @id_i into p;
-
-if id_rl is not null and not exists 
-(
-select 1
-from playandbay.fct_grabber_ebay fga
-where exists (select *
-              from playandbay.fct_filter ff
-              join playandbay.categories t on ff.fk_i_category_id=t.pk_i_id
-		  	  join oc_t_multicurrency c on c.s_to = 'RUB'
-			  where fga.curr_code = c.s_from and ff.fk_i_category_id = t.pk_i_id and fga.user_section = t.s_name
-                    and ((fga.price * f_rate < ff.min_price or ff.min_price is null)
-                         and (upper(fga.title) regexp ff.title_filter or ff.title_filter is null)
-						 and (upper(fga.description) regexp ff.description_filter) or ff.description_filter is null)
-               )
-
-and id_resource_list=id_rl
-) then
-
-begin
-
-insert into playandbay.oc_t_item (pk_i_id, fk_i_category_id, dt_pub_date, i_price, fk_c_currency_code, b_enabled, b_active)
-select @id_i, t.pk_i_id, now(), m.price*1000000, m.curr_code, 1, 1
-from playandbay.fct_grabber_ebay m
-join categories t on m.user_section=t.s_name
-join playandbay.oc_t_currency c on c.pk_c_code = m.curr_code
-where m.id_resource_list=id_rl;
-
-insert into playandbay.oc_t_item_description (fk_i_item_id, fk_c_locale_code, s_title, s_description)
-select @id_i, "en_US", title, description
-from playandbay.fct_grabber_ebay
-where id_resource_list=id_rl;
-
-insert into playandbay.oc_t_item_location (fk_i_item_id, fk_c_country_code, s_country, fk_i_region_id, s_region, fk_i_city_id, s_city)
-select @id_i, a.country, c.s_name, r.pk_i_id, r.s_name, c.pk_i_id, c.s_name
-from playandbay.fct_grabber_ebay a
-join playandbay.oc_t_country co on a.country = co.pk_c_code
-left join playandbay.oc_t_city c on c.s_name=left(a.city, locate(",", a.city) - 1)
-left join playandbay.oc_t_region r on r.s_name= right(a.city, length(a.city) - locate(",", a.city) - 1)
-where a.id_resource_list=id_rl
-limit 1;
-
-update playandbay.oc_t_item_resource r
-set r.fk_i_item_id=@id_i
-where pk_i_id in (select id_resource 
-                  from playandbay.ass_grabber_ebay_resource_list
-                  where id_resource_list=id_rl);
-
-update playandbay.oc_t_city_stats t
-set i_num_items = i_num_items + 1
-where t.fk_i_city_id = (select fk_i_city_id 
-                        from playandbay.oc_t_item_location
-					    where fk_i_item_id = @id_i);
-
-update playandbay.oc_t_country_stats
-set i_num_items = i_num_items + 1
-where fk_c_country_code = (select fk_c_country_code 
-                           from playandbay.oc_t_item_location
-					       where fk_i_item_id = @id_i);
-
-
-update playandbay.oc_t_region_stats
-set i_num_items = i_num_items + 1
-where fk_i_region_id = (select fk_i_region_id 
-				        from playandbay.oc_t_item_location
-						where fk_i_item_id = @id_i);
-
-update playandbay.oc_t_category_stats
-set i_num_items = i_num_items + 1
-where fk_i_category_id in 
-(
-select fk_i_category_id 
-from playandbay.oc_t_item
-where pk_i_id = @id_i
-union
-select fk_i_parent_id
-from playandbay.oc_t_category
-where pk_i_id = (select fk_i_category_id 
-                 from playandbay.oc_t_item
-                 where pk_i_id = @id_i)
-union
-select fk_i_parent_id
-from playandbay.oc_t_category
-where pk_i_id = (select fk_i_parent_id
-                 from playandbay.oc_t_category
-                 where pk_i_id = (select fk_i_category_id 
-                                  from playandbay.oc_t_item
-                                  where pk_i_id = @id_i))
-union
-select fk_i_parent_id
-from playandbay.oc_t_category
-where pk_i_id = (select fk_i_parent_id
-				from playandbay.oc_t_category
-				where pk_i_id = (select fk_i_parent_id
-                				 from playandbay.oc_t_category
-      				             where pk_i_id = (select fk_i_category_id 
-											  	  from playandbay.oc_t_item
-          				                          where pk_i_id = @id_i)))
-);
-
-insert into  playandbay.oc_t_item_meta
-select @id_i, 1, 'продам', ''
-from playandbay.oc_t_item
-where pk_i_id = @id_i;
-
-update playandbay.fct_grabber_ebay 
-set transformated=1, item_id=@id_i #transformated
-where id_resource_list=id_rl;
-
-#mark bad parsed
-if not exists 
-(
-select 1
-from playandbay.oc_t_item i
-join playandbay.oc_t_item_description d on i.pk_i_id = d.fk_i_item_id
-join playandbay.oc_t_item_location l on i.pk_i_id = l.fk_i_item_id
-join playandbay.oc_t_item_resource r on i.pk_i_id = r.fk_i_item_id
-join playandbay.oc_t_item_meta m on i.pk_i_id = m.fk_i_item_id
-where i.pk_i_id = @id_i
-) then
-begin
-update playandbay.fct_grabber_ebay 
-set transformated = 3 #bad attrs
-where id_resource_list=id_rl;
-end;
-end if;
-
-end;
-
-else 
-update playandbay.fct_grabber_ebay 
-set transformated = 2 #filtered
-where id_resource_list=id_rl;
-
-end if;
-
-#end while;
-commit;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_prepare_avito_environment` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2670,4 +2516,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-06 12:37:02
+-- Dump completed on 2015-11-08 21:50:44
