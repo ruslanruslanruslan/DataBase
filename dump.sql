@@ -94,7 +94,7 @@ CREATE TABLE `fct_categories_search` (
   `pk_i_id` int(11) NOT NULL AUTO_INCREMENT,
   `ordering` int(11) DEFAULT NULL,
   PRIMARY KEY (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +111,7 @@ CREATE TABLE `fct_filter` (
   `description_filter` varchar(255) DEFAULT NULL,
   `min_price` int(11) DEFAULT NULL,
   PRIMARY KEY (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `fct_smsspamer` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `sent_date` datetime DEFAULT NULL,
   PRIMARY KEY (`pk_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=706 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2795 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -549,7 +549,7 @@ CREATE TABLE `oc_t_item` (
   CONSTRAINT `oc_t_item_ibfk_1` FOREIGN KEY (`fk_i_user_id`) REFERENCES `oc_t_user` (`pk_i_id`),
   CONSTRAINT `oc_t_item_ibfk_2` FOREIGN KEY (`fk_i_category_id`) REFERENCES `oc_t_category` (`pk_i_id`),
   CONSTRAINT `oc_t_item_ibfk_3` FOREIGN KEY (`fk_c_currency_code`) REFERENCES `oc_t_currency` (`pk_c_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=84229 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=88487 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +578,7 @@ CREATE TABLE `oc_t_item_comment` (
   KEY `fk_i_item_id_3` (`fk_i_item_id`),
   CONSTRAINT `oc_t_item_comment_ibfk_1` FOREIGN KEY (`fk_i_item_id`) REFERENCES `oc_t_item` (`pk_i_id`),
   CONSTRAINT `oc_t_item_comment_ibfk_2` FOREIGN KEY (`fk_i_user_id`) REFERENCES `oc_t_user` (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -672,7 +672,7 @@ CREATE TABLE `oc_t_item_resource` (
   KEY `fk_i_item_id_2` (`fk_i_item_id`),
   KEY `fk_i_item_id_3` (`fk_i_item_id`),
   CONSTRAINT `oc_t_item_resource_ibfk_1` FOREIGN KEY (`fk_i_item_id`) REFERENCES `oc_t_item` (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=271984 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=349672 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -712,7 +712,7 @@ CREATE TABLE `oc_t_item_watchlist` (
   `fk_i_item_id` int(10) unsigned DEFAULT NULL,
   `fk_i_user_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1089,7 +1089,7 @@ CREATE TABLE `oc_t_pm_settings` (
   `flash_alert` enum('1','0') DEFAULT NULL,
   `save_sent` enum('1','0') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2640 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2988 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1200,7 +1200,7 @@ CREATE TABLE `oc_t_user` (
   CONSTRAINT `oc_t_user_ibfk_2` FOREIGN KEY (`fk_i_region_id`) REFERENCES `oc_t_region` (`pk_i_id`),
   CONSTRAINT `oc_t_user_ibfk_3` FOREIGN KEY (`fk_i_city_id`) REFERENCES `oc_t_city` (`pk_i_id`),
   CONSTRAINT `oc_t_user_ibfk_4` FOREIGN KEY (`fk_i_city_area_id`) REFERENCES `oc_t_city_area` (`pk_i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2482 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2830 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1319,6 +1319,20 @@ CREATE TABLE `oc_t_widget` (
   `s_content` mediumtext NOT NULL,
   PRIMARY KEY (`pk_i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `phone_nums`
+--
+
+DROP TABLE IF EXISTS `phone_nums`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `phone_nums` (
+  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `phone_number` varchar(12) NOT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB AUTO_INCREMENT=6669 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1543,6 +1557,7 @@ begin
 						fct_smsspamer 
 					where 
 						sent_date > date_add(CURRENT_TIMESTAMP, INTERVAL -30 DAY)
+						or sent_date is null
 					)
 			)
 		)
@@ -1710,10 +1725,12 @@ begin
 				COUNT(*) 
 			FROM 
 				fct_smsspamer
-			WHERE sent_date > DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -1 DAY)
+			WHERE 
+				#sent_date > DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -1 DAY)
+				sent_date > DATE(CURRENT_TIMESTAMP)
 		);
 
-	SET @sms_left = 100 - @last_day_cnt;
+	SET @sms_left =105 - @last_day_cnt;
 
 	RETURN @sms_left;
 
@@ -2241,8 +2258,6 @@ start transaction;
 	set @id_i = (select fn_get_NextItemId());
 
 	if 
-		(select fn_check_avito_IsRLFiltered(id_rl))
-		or
 		(
 		select 
 			1
@@ -2256,7 +2271,14 @@ start transaction;
 				or city is null
 				or photo_cnt = 0
 				or photo_cnt is null
-				or author regexp '[a-z]'
+				or price < 2000
+				or price is null
+				or upper(author) regexp '[a-z]'
+				or upper(author) regexp 'ЛИЦО'
+				or upper(author) regexp 'МАГАЗИН'
+				or upper(author) regexp 'ПАНИЯ'
+				or upper(description) regexp 'НОВЫЙ|НОВАЯ|НОВОЕ'
+				or upper(title) regexp 'НОВЫЙ|НОВАЯ|НОВОЕ'
 				)
 		limit 1
 		)
@@ -2267,7 +2289,7 @@ start transaction;
 			transformated = 2
 		where 
 			id_resource_list = id_rl;
-		select "FILTERED";
+		select "FILTERED1";
 		leave t_root;
 	end if;
 	
@@ -2282,6 +2304,19 @@ start transaction;
 		where 
 			id_resource_list = id_rl;
 		select "SPAMED";
+		leave t_root;
+	end if;
+
+	if 
+		(select fn_check_avito_IsRLFiltered(id_rl))
+	then
+		update 
+			fct_grabber_avito 
+		set 
+			transformated = 2
+		where 
+			id_resource_list = id_rl;
+		select "FILTERED2";
 		leave t_root;
 	end if;
 
@@ -2516,4 +2551,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-08 21:50:44
+-- Dump completed on 2015-12-06 21:33:08
