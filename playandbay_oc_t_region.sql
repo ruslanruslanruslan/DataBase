@@ -1,0 +1,62 @@
+CREATE DATABASE  IF NOT EXISTS `playandbay_testXXX` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `playandbay_testXXX`;
+-- MySQL dump 10.13  Distrib 5.6.13, for Win64 (x86_64)
+--
+-- Host: localhost    Database: playandbay
+-- ------------------------------------------------------
+-- Server version	5.6.13
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `oc_t_region`
+--
+
+DROP TABLE IF EXISTS `oc_t_region`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oc_t_region` (
+  `pk_i_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_c_country_code` char(2) NOT NULL,
+  `s_name` varchar(60) NOT NULL,
+  `b_active` tinyint(1) NOT NULL DEFAULT '1',
+  `s_slug` varchar(60) NOT NULL DEFAULT '',
+  PRIMARY KEY (`pk_i_id`),
+  KEY `fk_c_country_code` (`fk_c_country_code`),
+  KEY `idx_s_name` (`s_name`),
+  KEY `fk_c_country_code_2` (`fk_c_country_code`),
+  KEY `idx_s_slug` (`s_slug`),
+  KEY `fk_c_country_code_3` (`fk_c_country_code`),
+  CONSTRAINT `oc_t_region_ibfk_1` FOREIGN KEY (`fk_c_country_code`) REFERENCES `oc_t_country` (`pk_c_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=782093 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oc_t_region`
+--
+
+LOCK TABLES `oc_t_region` WRITE;
+/*!40000 ALTER TABLE `oc_t_region` DISABLE KEYS */;
+INSERT INTO `oc_t_region` VALUES (311,'gb','London',1,'london'),(740441,'gb','Bedfordshire',1,'bedfordshire'),(740448,'gb','Berkshire',1,'berkshire'),(740455,'gb','Bristol',1,'bristol'),(740457,'gb','Buckinghamshire',1,'buckinghamshire'),(740462,'gb','Cambridgeshire',1,'cambridgeshire'),(740467,'gb','Cheshire',1,'cheshire'),(740473,'gb','Cornwall',1,'cornwall'),(740529,'gb','Cumbria',1,'cumbria'),(740602,'gb','Derbyshire',1,'derbyshire'),(740647,'gb','Devon',1,'devon'),(740736,'gb','Dorset',1,'dorset'),(740774,'gb','Durham',1,'durham'),(740811,'gb','East Sussex',1,'east-sussex'),(740855,'gb','East Yorkshire',1,'east-yorkshire'),(740874,'gb','Essex',1,'essex'),(740936,'gb','Gloucestershire',1,'gloucestershire'),(740996,'gb','Great London',1,'great-london'),(741078,'gb','Great Manchester',1,'great-manchester'),(741109,'gb','Hampshire',1,'hampshire'),(741186,'gb','Herefordshire',1,'herefordshire'),(741203,'gb','Hertfordshire',1,'hertfordshire'),(741254,'gb','Isle de Wight',1,'isle-de-wight'),(741270,'gb','Kent',1,'kent'),(741350,'gb','Lancashire',1,'lancashire'),(741403,'gb','Leicestershire',1,'leicestershire'),(741428,'gb','Lincolnshire',1,'lincolnshire'),(741466,'gb','Merseyside',1,'merseyside'),(741488,'gb','Norfolk',1,'norfolk'),(741529,'gb','North Yorkshire',1,'north-yorkshire'),(741600,'gb','Northamptonshire',1,'northamptonshire'),(741623,'gb','Northumberland',1,'northumberland'),(741647,'gb','Nottinghamshire',1,'nottinghamshire'),(741671,'gb','Oxfordshire',1,'oxfordshire'),(741727,'gb','Rutland',1,'rutland'),(741730,'gb','Shropshire',1,'shropshire'),(741754,'gb','Somerset',1,'somerset'),(741812,'gb','South Yorkshire',1,'south-yorkshire'),(741823,'gb','Staffordshire',1,'staffordshire'),(741856,'gb','Suffolk',1,'suffolk'),(741899,'gb','Surrey',1,'surrey'),(741962,'gb','Tyne y Wear',1,'tyne-y-wear'),(741974,'gb','Warwickshire',1,'warwickshire'),(742010,'gb','West Midlands',1,'west-midlands'),(742036,'gb','West Sussex',1,'west-sussex'),(742089,'gb','West Yorkshire',1,'west-yorkshire'),(742134,'gb','Wiltshire',1,'wiltshire'),(742179,'gb','Worcestershire',1,'worcestershire'),(781162,'ca','Alberta',1,'alberta'),(781163,'ca','British Columbia',1,'british-columbia'),(781164,'ca','Manitoba',1,'manitoba'),(781165,'ca','New Brunswick',1,'new-brunswick'),(781166,'ca','Newfoundland',1,'newfoundland'),(781167,'ca','Northwest Territories',1,'northwest-territories'),(781168,'ca','Nova Scotia',1,'nova-scotia'),(781169,'ca','Nunavut',1,'nunavut'),(781170,'ca','Ontario',1,'ontario'),(781171,'ca','Prince Edward Island',1,'prince-edward-island'),(781172,'ca','Québec',1,'quebec'),(781173,'ca','Saskatchewan',1,'saskatchewan'),(781174,'ca','Yukon',1,'yukon'),(781839,'ru','Агинский Бурятский автономный округ',1,'агинский-бурятский-автономный-округ'),(781840,'ru','Алтайский край',1,'алтайский-край'),(781841,'ru','Амурская область',1,'амурская-область'),(781842,'ru','Архангельская область',1,'архангельская-область'),(781843,'ru','Астраханская область',1,'астраханская-область'),(781844,'ru','Белгородская область',1,'белгородская-область'),(781845,'ru','Брянская область',1,'брянская-область'),(781846,'ru','Владимирская область',1,'владимирская-область'),(781847,'ru','Волгоградская область',1,'волгоградская-область'),(781848,'ru','Вологодская область',1,'вологодская-область'),(781849,'ru','Воронежская область',1,'воронежская-область'),(781850,'ru','Еврейская автономная область',1,'еврейская-автономная-область'),(781851,'ru','Ивановская область',1,'ивановская-область'),(781852,'ru','Иркутская область',1,'иркутская-область'),(781853,'ru','Кабардино-Балкарская Республика',1,'кабардино-балкарская-республика'),(781854,'ru','Калининградская область',1,'калининградская-область'),(781855,'ru','Калужская область',1,'калужская-область'),(781856,'ru','Камчатская область',1,'камчатская-область'),(781857,'ru','Карачаево-Черкесская Республика',1,'карачаево-черкесская-республика'),(781858,'ru','Кемеровская область',1,'кемеровская-область'),(781859,'ru','Кировская область',1,'кировская-область'),(781860,'ru','Коми-Пермяцкий автономный округ',1,'коми-пермяцкий-автономный-округ'),(781861,'ru','Корякский автономный округ',1,'корякский-автономный-округ'),(781862,'ru','Костромская область',1,'костромская-область'),(781863,'ru','Краснодарский край',1,'краснодарский-край'),(781864,'ru','Красноярский край',1,'красноярский-край'),(781865,'ru','Курганская область',1,'курганская-область'),(781866,'ru','Курская область',1,'курская-область'),(781867,'ru','Ленинградская область',1,'ленинградская-область'),(781868,'ru','Липецкая область',1,'липецкая-область'),(781869,'ru','Магаданская область',1,'магаданская-область'),(781870,'ru','Москва',1,'москва'),(781871,'ru','Московская область',1,'московская-область'),(781872,'ru','Мурманская область',1,'мурманская-область'),(781873,'ru','Ненецкий автономный округ',1,'ненецкий-автономный-округ'),(781874,'ru','Нижегородская область',1,'нижегородская-область'),(781875,'ru','Новгородская область',1,'новгородская-область'),(781876,'ru','Новосибирская область',1,'новосибирская-область'),(781877,'ru','Омская область',1,'омская-область'),(781878,'ru','Оренбургская область',1,'оренбургская-область'),(781879,'ru','Орловская область',1,'орловская-область'),(781880,'ru','Пензенская область',1,'пензенская-область'),(781881,'ru','Пермская область',1,'пермская-область'),(781882,'ru','Приморский край',1,'приморский-край'),(781883,'ru','Псковская область',1,'псковская-область'),(781884,'ru','Республика Адыгея',1,'республика-адыгея'),(781885,'ru','Республика Алтай',1,'республика-алтай'),(781886,'ru','Республика Башкортостан',1,'республика-башкортостан'),(781887,'ru','Республика Бурятия',1,'республика-бурятия'),(781888,'ru','Республика Дагестан',1,'республика-дагестан'),(781889,'ru','Республика Ингушетия',1,'республика-ингушетия'),(781890,'ru','Республика Калмыкия',1,'республика-калмыкия'),(781891,'ru','Республика Карелия',1,'республика-карелия'),(781892,'ru','Республика Коми',1,'республика-коми'),(781893,'ru','Республика Марий Эл',1,'республика-марий-эл'),(781894,'ru','Республика Мордовия',1,'республика-мордовия'),(781895,'ru','Республика Саха (Якутия)',1,'республика-саха-(якутия)'),(781896,'ru','Республика Северная Осетия - Алания',1,'республика-северная-осетия---алания'),(781897,'ru','Республика Татарстан',1,'республика-татарстан'),(781898,'ru','Республика Тыва',1,'республика-тыва'),(781899,'ru','Республика Хакасия',1,'республика-хакасия'),(781900,'ru','Ростовская область',1,'ростовская-область'),(781901,'ru','Рязанская область',1,'рязанская-область'),(781902,'ru','Самарская область',1,'самарская-область'),(781903,'ru','Санкт-Петербург',1,'санкт-петербург'),(781904,'ru','Саратовская область',1,'саратовская-область'),(781905,'ru','Сахалинская область',1,'сахалинская-область'),(781906,'ru','Свердловская область',1,'свердловская-область'),(781907,'ru','Смоленская область',1,'смоленская-область'),(781908,'ru','Ставропольский край',1,'ставропольский-край'),(781909,'ru','Тамбовская область',1,'тамбовская-область'),(781910,'ru','Тверская область',1,'тверская-область'),(781911,'ru','Томская область',1,'томская-область'),(781912,'ru','Тульская область',1,'тульская-область'),(781913,'ru','Тюменская область',1,'тюменская-область'),(781914,'ru','Удмуртская Республика',1,'удмуртская-республика'),(781915,'ru','Ульяновская область',1,'ульяновская-область'),(781916,'ru','Усть-Ордынский Бурятский а. о.',1,'усть-ордынский-бурятский-а.-о.'),(781917,'ru','Хабаровский край',1,'хабаровский-край'),(781918,'ru','Ханты-Мансийский автономный округ',1,'ханты-мансийский-автономный-округ'),(781919,'ru','Челябинская область',1,'челябинская-область'),(781920,'ru','Чеченская Республика',1,'чеченская-республика'),(781921,'ru','Читинская область',1,'читинская-область'),(781922,'ru','Чувашская Республика',1,'чувашская-республика'),(781923,'ru','Чукотский автономный округ',1,'чукотский-автономный-округ'),(781924,'ru','Ямало-Ненецкий автономный округ',1,'ямало-ненецкий-автономный-округ'),(781925,'ru','Ярославская область',1,'ярославская-область'),(782042,'us','Alabama',1,'alabama'),(782043,'us','Alaska',1,'alaska'),(782044,'us','Arizona',1,'arizona'),(782045,'us','Arkansas',1,'arkansas'),(782046,'us','California',1,'california'),(782047,'us','Colorado',1,'colorado'),(782048,'us','Connecticut',1,'connecticut'),(782049,'us','Delaware',1,'delaware'),(782050,'us','District of Columbia',1,'district-of-columbia'),(782051,'us','Florida',1,'florida'),(782052,'us','Georgia',1,'georgia'),(782053,'us','Hawaii',1,'hawaii'),(782054,'us','Idaho',1,'idaho'),(782055,'us','Illinois',1,'illinois'),(782056,'us','Indiana',1,'indiana'),(782057,'us','Iowa',1,'iowa'),(782058,'us','Kansas',1,'kansas'),(782059,'us','Kentucky',1,'kentucky'),(782060,'us','Louisiana',1,'louisiana'),(782061,'us','Maine',1,'maine'),(782062,'us','Maryland',1,'maryland'),(782063,'us','Massachusetts',1,'massachusetts'),(782064,'us','Michigan',1,'michigan'),(782065,'us','Minnesota',1,'minnesota'),(782066,'us','Mississippi',1,'mississippi'),(782067,'us','Missouri',1,'missouri'),(782068,'us','Montana',1,'montana'),(782069,'us','Nebraska',1,'nebraska'),(782070,'us','Nevada',1,'nevada'),(782071,'us','New Hampshire',1,'new-hampshire'),(782072,'us','New Jersey',1,'new-jersey'),(782073,'us','New Mexico',1,'new-mexico'),(782074,'us','New York',1,'new-york'),(782075,'us','North Carolina',1,'north-carolina'),(782076,'us','North Dakota',1,'north-dakota'),(782077,'us','Ohio',1,'ohio'),(782078,'us','Oklahoma',1,'oklahoma'),(782079,'us','Oregon',1,'oregon'),(782080,'us','Pennsylvania',1,'pennsylvania'),(782081,'us','Rhode Island',1,'rhode-island'),(782082,'us','South Carolina',1,'south-carolina'),(782083,'us','South Dakota',1,'south-dakota'),(782084,'us','Tennessee',1,'tennessee'),(782085,'us','Texas',1,'texas'),(782086,'us','Utah',1,'utah'),(782087,'us','Vermont',1,'vermont'),(782088,'us','Virginia',1,'virginia'),(782089,'us','Washington',1,'washington'),(782090,'us','West Virginia',1,'west-virginia'),(782091,'us','Wisconsin',1,'wisconsin'),(782092,'us','Wyoming',1,'wyoming');
+/*!40000 ALTER TABLE `oc_t_region` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-01-09 11:24:29
